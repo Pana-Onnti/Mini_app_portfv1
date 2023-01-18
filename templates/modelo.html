@@ -1,0 +1,35 @@
+ 
+  
+  <div class="container">
+    <ol class="breadcrumb my-4">
+      <li class="breadcrumb-item active">Boards</li>
+    </ol>
+    <div>
+      {%for x in resultado %}
+
+      {{x.name}}
+      {% endfor %}
+
+    </div>
+
+
+    <div>
+
+      {%for cartera in carteras %}
+      {{cartera.name }}
+      {{cartera.description}}
+      {% endfor %}
+    </div>
+    <div>
+      {%for activo in activos %}
+      {{activo.name}}
+      {{activo.description}}
+      {{activo.price}}
+      {{activo.cartera}}
+      {%endfor%}
+    </div>
+    <div>
+      {{activo.cartera}}
+    </div>
+  </div>
+</body>

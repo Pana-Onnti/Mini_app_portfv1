@@ -1,0 +1,3 @@
+python manage.py makemigrations
+Z:\Proyectos\Onnti1\PortfolioTracker_1_0\Scripts\activate.bat
+python -m pip install -U --force pip 
