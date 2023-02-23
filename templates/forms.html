@@ -5,4 +5,22 @@
     <label for="apellido">Apellido:</label>
     <input type="text" name="apellido" id="apellido" />
     <input type="submit" value="Enviar" />
+    <input type="hidden" name="next" value="{% url 'home' %}" /> 
   </form>
+
+  <div class="container-fluid">
+    <div class="modal modal-sheet position-static d-block bg-secondary py-11 bg-light">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-6 shadow">
+          <div class="modal-header border-bottom-0">
+            <h2 class="modal-title fs-1  display-4" style="font-size: 2rem;">Agregar Activos</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <img  class="img-fluid" src="data:image/png;base64,{{ graphic }}" />
+          
+        </div>
+
+      </div>
+
+    </div>
+  </div>

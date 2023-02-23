@@ -1,277 +1,489 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-
+<html lang="en" class="h-100">
 <head>
-  <meta charset="utf-8">
-  <title>Portfolio Tracker</title>
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0"></script>
 
-  
-  <script src="{% static 'lib/Highcharts-10.3.2/highcharts.js' %}" ></script>
-  <script src="{% static 'lib/Highcharts-10.3.2/modules/exporting.js' %}"></script>
-  <script src="{% static 'lib/Highcharts-10.3.2/modules/export-data.js' %}"></script>
-  <script src="{% static 'lib/Highcharts-10.3.2/modules/accessibility.js' %}"></script>
-
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+      
+    <script src="{% static 'lib/Highcharts-10.3.2/highcharts.js' %}" ></script>
+    <script src="{% static 'lib/Highcharts-10.3.2/modules/exporting.js' %}"></script>
+    <script src="{% static 'lib/Highcharts-10.3.2/modules/export-data.js' %}"></script>
+    <script src="{% static 'lib/Highcharts-10.3.2/modules/accessibility.js' %}"></script>
 </head>
-<!-- Esto es un comentario -->
-
-<body>
-  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-5 fs-5 display-3" href="#">Company name</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-      data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand  bg-primary tb text-dark" aria-label="Second navbar example">
+  <div class="container-fluid">
+    <a class="navbar-brand text-dark font-size-xl"  href="#"><strong> <h1>Portfolio Tracker</h1></strong></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search"
-      aria-label="Search">
-    <div class="navbar-nav">
-      <div class="nav-item text-nowrap">
-        <a class="nav-link px-3" href="#">Sign out</a>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarsExample02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active text-dark " aria-current="page" href="#"><h5>Home</h5></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#"><h5>Link</h5></a>
+        </li>
+      </ul>
+      <form role="search" style="margin-left: 75%;">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
     </div>
-  </header>
-  <div class="container-fluid">
-    <div class="row">
-      <nav id=sidebarMenu class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div class="position-sticky pt-3 sidebar-sticky">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home align-text-bottom" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                Dashboard
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file align-text-bottom" aria-hidden="true"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                Orders
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart align-text-bottom" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                Products
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users align-text-bottom" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                Customers
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 align-text-bottom" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                Reports
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers align-text-bottom" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                Integrations
-              </a>
-            </li>
-          </ul>
-  
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-            <span>Saved reports</span>
-            <a class="link-secondary" href="#" aria-label="Add a new report">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle align-text-bottom" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-            </a>
-          </h6>
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text align-text-bottom" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                Current month
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text align-text-bottom" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                Last quarter
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text align-text-bottom" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                Social engagement
-              </a>
-            </li>
-            <li class="nav-item">
-              <div class="modal modal-sheet position-static d-block bg-secondary py-11 bg-light" style="background-color: red;" tabindex="-1" role="dialog" id="modalSheet">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content rounded-6 shadow">
-                    <div class="modal-header border-bottom-0">
-                      <h2 class="modal-title fs-1  display-4" style="font-size: 2rem;">Agregar Activos</h2>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="/addActivo/" method="POST" class="bg-light " style="margin: 5% 5% 5% 5%">{% csrf_token %}
-                      <div class="form-group">
-                          <input class="form-control form-control-lg" type="text" placeholder="Nombre" aria-label=".form-control-lg example" name='nombre'>
-                      </div>
-                      <div class="form-group">
-                          <input class="form-control form-control-lg" type="text" placeholder="Descripcion" aria-label=".form-control-lg example" name='descripcion'>
-                      </div>
-                      <div class="form-group">
-                          <input class="form-control form-control-lg" type="text" placeholder="Precio" aria-label=".form-control-lg example" name='precio'>
-                      </div>
-                      <div class="form-group">
-                        <input class="form-control form-control-lg" type="text" placeholder="Cartera" aria-label=".form-control-lg example" name='clave'>
-                    </div>
-                     
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-success btn-block">ENVIAR</button>
-                      </div>
-                  </form>
+  </div>
+</nav>
+
+<body class="bg-light">
+  <div class="container-fluid bg-ligth"> 
+     <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container" >
+      <div class="tradingview-widget-container__widget"></div>
+    
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+      "symbols": [
+        {
+          "proName": "FOREXCOM:SPXUSD",
+          "title": "S&P 500"
+        },
+        {
+          "proName": "FOREXCOM:NSXUSD",
+          "title": "US 100"
+        },
+        {
+          "proName": "FX_IDC:EURUSD",
+          "title": "EUR/USD"
+        },
+        {
+          "proName": "BITSTAMP:BTCUSD",
+          "title": "Bitcoin"
+        },
+        {
+          "proName": "BITSTAMP:ETHUSD",
+          "title": "Ethereum"
+        }
+      ],
+      "showSymbolLogo": true,
+      "colorTheme": "ligth",
+      "isTransparent": false,
+      "displayMode": "adaptive",
+      "locale": "in"
+    }
+      </script>
+  </div>
+<!-- TradingView Widget END -->
+</div>
+  <div class="container-fluid " style=" background-color: #bee5eb;font-family: Financier; font-size: x-large; border: 1px solid black; padding: 0.3rem ; margin-top: 0.3rem ; margin-bottom: 0.3rem; border: 1px solid black;" >
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-sm-3">
+          <h4 style="color:dark">
+            <strong>Portfolio</strong> </h4>
+        </div>
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-8 col-sm-6">
+              
+              <h4 style="color:dark">
+                <strong>  Nicola B </strong>
+              </h4>         
+             
+            </div>
+            <div class="col-4 col-sm-6">
+              <div class="container text-center">
+                <div class="row row-cols-2">
+                  <div class="col">    
+                    <h4 style="color:dark">
+                      <strong>                        Current  Value :
+                      </strong>
+
+                    </h1>         
                   </div>
+                    <div>
+                      <h4 style="color:dark">
+                        <strong>                       $ {{price}}
+                        </strong>
+                      
+
+                      </h4> 
+                    </div>
+                  </div>
+
                 </div>
               </div>
-            </li>
-          </ul>
-        </div>
-
-      </nav>
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Dashboard</h1>
-          <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-              <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-              <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-            </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-text-bottom" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              This week
-            </button>
-          </div>
-        </div>
-        <!-- Esto es un comentario -->
-        <!-- Esto es un comentario -->
-        <!-- GRAFICO -->
-        <!-- Esto es un comentario -->
-        
-        <figure class="highcharts-figure">
-          <div id="container"></div>
-          <p class="highcharts-description">
-              A basic column chart comparing emissions by pollutant.
-              Oil and gas extraction has the overall highest amount of
-              emissions, followed by manufacturing industries and mining.
-              The chart is making use of the axis crosshair feature, to highlight
-              years as they are hovered over.
-          </p>
-      </figure>
-      
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div id="container">
             </div>
           </div>
         </div>
       </div>
-      <!-- GRAFICO SCRIPT -->
+    </div>
+</div>
+<div class="container-fluid bg-ligth">
+  <div class="row">
+    <div class="col-md-9 col-md-push-3">
+      
+        
 
-      <figure class="highcharts-figure">
-        <div id="container"></div>
-        <p class="highcharts-description">
-            This chart shows how data labels can be added to the data series. This
-            can increase readability and comprehension for small datasets.
-        </p>
-    </figure>
-    <script type="application/javascript">
-    </script>
+        <figure class="highcharts-figure ">
+            <div id="container"></div>
+            
+        </figure>
 
-    <script type="application/javascript">
-        // Data retrieved https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature
-       
-       
-        Highcharts.chart('container', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Rendimientos'
-        },
-        subtitle: {
-            text: "Retornos porcentuales"
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
-            title: {
-                text: '%'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
+        <script type="application/javascript">
+                Highcharts.getJSON(
+                'https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/usdeur.json',
+                function (data) {
+
+                    Highcharts.chart('container', {
+                        chart: {
+                            zoomType: 'x'
+                        },
+                        title: {
+                            text: 'Portfolio Value',
+                            align: 'left'
+                        },
+                        subtitle: {
+                            text: document.ontouchstart === undefined ?
+                                'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in',
+                            align: 'left'
+                        },
+                        xAxis: {
+                            type: 'datetime'
+                        },
+                        yAxis: {
+                            title: {
+                                text: ''
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            area: {
+                                fillColor: {
+                                    linearGradient: {
+                                        x1: 0,
+                                        y1: 0,
+                                        x2: 0,
+                                        y2: 1
+                                    },
+                                    stops: [
+                                        [0, Highcharts.getOptions().colors[2]],
+                                        [1, Highcharts.color(Highcharts.getOptions().colors[4]).setOpacity(0).get('rgba')]
+                                    ]
+                                },
+                                marker: {
+                                    radius: 2 
+                                },
+                                lineWidth: 1,
+                                states: {
+                                    hover: {
+                                        lineWidth: 1
+                                    }
+                                },
+                                threshold: null
+                            }
+                        },
+
+                        series: [{
+                            type: 'area',
+                            name: 'USD to EUR',
+                            data: data
+                        }]
+                    });
+                }
+          );
+
+        
+        </script>
+
+    </div>
+       <!-- TradingView Widget BEGIN -->
+    <div class="col-md-3 col-md-pull-9">
+      <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+              {
+              "width": "100%",
+              "height": "100%",
+              "symbolsGroups": [
+                {
+                  "name": "Índices",
+                  "originalName": "Indices",
+                  "symbols": [
+                    {
+                      "name": "FOREXCOM:SPXUSD",
+                      "displayName": "S&P 500"
+                    },
+                    {
+                      "name": "FOREXCOM:NSXUSD",
+                      "displayName": "US 100"
+                    },
+                    {
+                      "name": "FOREXCOM:DJI",
+                      "displayName": "Dow 30"
+                    },
+                    {
+                      "name": "INDEX:NKY",
+                      "displayName": "Nikkei 225"
+                    },
+                    {
+                      "name": "INDEX:DEU40",
+                      "displayName": "DAX Index"
+                    },
+                    {
+                      "name": "FOREXCOM:UKXGBP",
+                      "displayName": "UK 100"
+                    }
+                  ]
                 },
-                enableMouseTracking: false
+                {
+                  "name": "Futuros",
+                  "originalName": "Futures",
+                  "symbols": [
+                    {
+                      "name": "CME_MINI:ES1!",
+                      "displayName": "S&P 500"
+                    },
+                    {
+                      "name": "CME:6E1!",
+                      "displayName": "Euro"
+                    },
+                    {
+                      "name": "COMEX:GC1!",
+                      "displayName": "Gold"
+                    },
+                    {
+                      "name": "NYMEX:CL1!",
+                      "displayName": "Crude Oil"
+                    },
+                    {
+                      "name": "NYMEX:NG1!",
+                      "displayName": "Natural Gas"
+                    },
+                    {
+                      "name": "CBOT:ZC1!",
+                      "displayName": "Corn"
+                    }
+                  ]
+                },
+                {
+                  "name": "Bonos",
+                  "originalName": "Bonds",
+                  "symbols": [
+                    {
+                      "name": "CME:GE1!",
+                      "displayName": "Eurodollar"
+                    },
+                    {
+                      "name": "CBOT:ZB1!",
+                      "displayName": "T-Bond"
+                    },
+                    {
+                      "name": "CBOT:UB1!",
+                      "displayName": "Ultra T-Bond"
+                    },
+                    {
+                      "name": "EUREX:FGBL1!",
+                      "displayName": "Euro Bund"
+                    },
+                    {
+                      "name": "EUREX:FBTP1!",
+                      "displayName": "Euro BTP"
+                    },
+                    {
+                      "name": "EUREX:FGBM1!",
+                      "displayName": "Euro BOBL"
+                    }
+                  ]
+                },
+                {
+                  "name": "Forex",
+                  "originalName": "Forex",
+                  "symbols": [
+                    {
+                      "name": "FX:EURUSD",
+                      "displayName": "EUR/USD"
+                    },
+                    {
+                      "name": "FX:GBPUSD",
+                      "displayName": "GBP/USD"
+                    },
+                    {
+                      "name": "FX:USDJPY",
+                      "displayName": "USD/JPY"
+                    },
+                    {
+                      "name": "FX:USDCHF",
+                      "displayName": "USD/CHF"
+                    },
+                    {
+                      "name": "FX:AUDUSD",
+                      "displayName": "AUD/USD"
+                    },
+                    {
+                      "name": "FX:USDCAD",
+                      "displayName": "USD/CAD"
+                    }
+                  ]
+                }
+              ],
+              "showSymbolLogo": true,
+              "colorTheme": "ligth",
+              "isTransparent": true,
+              "locale": "es"
             }
-        },
-        series: [
-        
-       
-        {
-            name: 'Tallinn',
-            data: {{dato_anual|safe}}
-        }
-        ]
-    });
-    </script>
-      <!-- TABLA
-        series: [
-        {
-            name: 'Reggane',
-            data: [16.0, 18.2, 23.1, 27.9, 32.2, 36.4, 39.8, 38.4, 35.5, 29.2,
-                22.0, 17.8]
-        },
-        {
-            name: 'roberto',
-            data: {{monedas|safe}}
-        },
-        {
-            name: 'Tallinn',
-            data: [-2.9, -3.6, -0.6, 4.8, 10.2, 14.5, 17.6, 16.5, 12.0, 6.5,
-                2.0, -0.9]
-        }]
-        
-        FINAL -->
+              </script>
+            </div>
+            <!-- TradingView Widget END -->
+              
+      </div>
+  </div>
 
-        <h2>Section d</h2>
-        <div class="table-responsive">
-          <table class="table table-striped table-sm">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Header</th>
-                <th scope="col">Header</th>
-                <th scope="col">Header</th>
-              </tr>
-            </thead>
-            <tbody  {%for activo in activos %}>
-             
-              <tr>
+</div>
+<div  class="bg-ligth container-fluid " style="border-bottom: 1px solid black;">
+  <div class="table-responsive">
+  
+    <table class="table" >
+      <thead>
+        <tr class="table-info">
+          <th scope="col">Activo</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Cartera</th>
+        </tr>
+      </thead>
+      <tbody {%for activo in activos %}>
+        <tr class='Light'>
                 <td>{{activo.name}}</td>
                 <td>{{activo.description}}
                 </td>
-                <td>{{activo.price}}
+                <td>${{activo.price}}
                 </td>
                 <td>{{activo.cartera}}
                 </td>
-              </tr>
-            
-            </tbody  {%endfor%} >
-          </table>
-        </div>
-      </main>
-    </div>
-
+        </tr>    
+      </tbody{%endfor%}>
+    </table>
+    
   </div>
- 
+</div>
+<div class="container-fluid bg-ligth width20">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="modal modal-sheet position-static d-block bg-secondary py-11 bg-light" style="background-color: red;" tabindex="-1" role="dialog" id="modalSheet">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-6 shadow">
+              <div class="modal-header border-bottom-0">
+                <h2 class="modal-title fs-1  display-4" style="font-size: 2rem;">Agregar Activos</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="/addActivo/" method="POST" class="bg-light " style="margin: 5% 5% 5% 5%">{% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="text" placeholder="Nombre" aria-label=".form-control-lg example" name='nombre'>
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="text" placeholder="Descripcion" aria-label=".form-control-lg example" name='descripcion'>
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" type="text" placeholder="Precio" aria-label=".form-control-lg example" name='precio'>
+                </div>
+                <div class="form-group">
+                  <input class="form-control form-control-lg" type="text" placeholder="Cartera" aria-label=".form-control-lg example" name='clave'>
+              </div>
+               
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-block">ENVIAR</button>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+    </div>
+      
+      
+                  <!-------------------------- END -->
+
+      
+      <div class="col-sm-6">
+          <div class="modal modal-sheet position-static d-block bg-secondary py-11 bg-light" style="background-color: red;" tabindex="-1" role="dialog" id="modalSheet">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content rounded-6 shadow">
+                <div class="modal-header border-bottom-0">
+                  <h2 class="modal-title fs-1  display-4" style="font-size: 2rem;">Distribucion de Activos</h2>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <img  class="img-fluid" src="data:image/png;base64,{{ graphic }}" />
+
+                 
+                  
+              </div>
+            </div>
+          </div>   
+    </div>
+</div>
+<div class="container-fluid" style="border: 1px solid black;">
+  <div class="row"  style=" text-align: center;  background-color: #bee5eb;">
+    <div class="col-sm-6" style="margin-top: 1rem ;margin-bottom: 1rem;">
+      <h4>Activos en cartera</h4>
+    </div>
+    <div class="col-sm-6" style="margin-top: 1rem ;margin-bottom: 1rem;">
+      <h4>Forex Map</h4>
+    </div>
+</div>   
+<div class="container-fluid"  style='background-color: #d7f2f6;'>
+  <div class="row">
+    <div class="col-sm-6"{%for activo in activos %} >
+
+        <!-- TradingView Widget BEGIN -->
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
+                    {
+                    "symbol": "NYSE:{{activo.name}}",
+                    "width": "100%",
+                    "locale": "en",
+                    "colorTheme": "light",
+                    "isTransparent": false
+                    }
+                    </script>
+      </div {%endfor%}>
+    </div>  
+    <div class="col-sm-6">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                  <div class="tradingview-widget-container__widget"></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
+                  {
+                  "width": "100%",
+                  "height": "100%",
+                  "currencies": [
+                    "EUR",
+                    "USD",
+                    "JPY",
+                    "GBP",
+                    "CHF",
+                    "AUD",
+                    "CAD",
+                    "NZD"
+                  ],
+                  "isTransparent": false,
+                  "colorTheme": "light",
+                  "locale": "en"
+                }
+                  </script>
+                </div>
+<!-- TradingView Widget END -->      
+    </div>
+  </div>
+</div>
+
+</body>
+
 
 </html>
+

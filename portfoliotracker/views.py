@@ -1,40 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse 
-from .models import Board
 from .models import Cartera
 from .models import Activo
-from django.db import models
-from .retornos import Stock
-from .retornos import Cotizacion
 import datetime
+import matplotlib.pyplot as plt
+import base64
+import io
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
-
-
-# Create your views here.
-#globales# 
-clave = 3
-if clave > len(Cartera.objects.all()): clave = 1
-#cartera = Cartera.objects.get(id=clave)
-activos = Activo.objects.filter(cartera=Cartera.objects.get(id=clave))
-# prueba
-asd = ['KO','TSLA']
-cotizacion = Cotizacion(asd)
-cotizacion = cotizacion[0]
-price = sum(activo.price for activo in activos) 
-
-
-
-
-def home(request):
-    boards = Board.objects.all()
-    carteras = Cartera.objects.all()
-    activos = Activo.objects.all()
-    global price 
-    valor = Stock('KO')
-    dato_anual =  valor[3]
-
-    
-    return render(request, 'home.html', {'boards': boards ,'carteras':carteras,'activos':activos, 'price':price, 'dato_anual' : dato_anual})
 
 
 def addActivo(request):
@@ -45,37 +18,7 @@ def addActivo(request):
     Activo.objects.create(
         name=name , description=description, price=price,cartera = Cartera.objects.get(name=clave)
     )
-
-def Grafico (request):
-    clave = 3
-    if clave > len(Cartera.objects.all()): clave = 1
-    cartera = Cartera.objects.get(id=clave)
-    #resultados =  Activo.objects.filter(cartera=cartera).values()
-    resultados= Activo.objects.filter(cartera=cartera)
-    nombre = resultados[0].name , len(resultados)
-    nombre = []
-    for x in range(len(resultados)):
-        nombre.append(resultados[x].name)
-    activos = Activo.objects.filter(cartera=cartera)
-    price = sum(activo.price for activo in activos)
-    valor = Stock('AMZN')
-    valor1 = round(valor[0],3)
-    dato_anual =  [111.0, 18.2, 23.1, 27.9, 32.2, 36.4, 39.8, 38.4, 35.5, 29.2, 22.0, 17.8]
-    asd = nombre
-    ####
-    error = 0
-    #correcion de precio total si la accion no existe# 
-    for x in range(len(Cotizacion(asd)[2])):
-        nota = (Cotizacion(asd)[2])
-        a = nota[x]
-        b = Activo.objects.filter(name=a)
-        c = b[0].price 
-        error += c 
-    cotizacion = 'el valor actual es de ',  (Cotizacion(asd)[0]-price) + error
-            
-
-    
-    return render(request, 'Grafico.html',{'cartera':cartera ,'error':error,'nombre':nombre,'cotizacion':cotizacion, 'resultados':resultados ,'price':price , 'valor':valor1 , 'dato_anual':dato_anual } )
+    return redirect(reverse(Home))
 
 
 def guardar_datos(request):
@@ -84,7 +27,45 @@ def guardar_datos(request):
     # Aquí puedes guardar los datos en la base de datos
     return render(request,{'nombre':nombre})
 
+class GraficadorInterface:
+    def crear_grafico(self, labels, data):
+        pass
 
-def Diario_Trade (request):
-    hora = datetime.datetime.now()
-    return render(request,'Diario.html',{'hora':hora})
+class MatplotlibGraficador(GraficadorInterface):
+    def crear_grafico(self, labels, data):
+        fig, ax = plt.subplots()
+        ax.pie(data, labels=labels, autopct='%1.1f%%')
+        #ax.set_title('')
+        buffer = io.BytesIO()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        image = buffer.getvalue()
+        buffer.close()
+        return base64.b64encode(image).decode('utf-8')
+
+class GraficadorFactory:
+    @staticmethod
+    def obtener_graficador():
+        return MatplotlibGraficador()
+
+def crear_grafico(labels, data):
+    graficador = GraficadorFactory.obtener_graficador()
+    return graficador.crear_grafico(labels, data)
+
+def obtener_hora_actual():
+    return datetime.datetime.now()
+
+#def renderizar_plantilla(request,hora_actual, graphic):
+#    return render(request, 'Diario.html', {'hora': hora_actual, 'graphic': graphic})
+
+def Home(request):
+    activos = Activo.objects.all()
+    labels = [activo.name for activo in activos]
+    data = [activo.price for activo in activos]
+    graphic = crear_grafico(labels, data)
+    hora_actual = obtener_hora_actual()
+
+    #
+    price = sum(activo.price for activo in activos) 
+    #
+    return render(request, 'home.html', { 'price':price,'activos':activos, 'hora': hora_actual, 'graphic': graphic})

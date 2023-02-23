@@ -20,10 +20,8 @@ from portfoliotracker import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('home/', views.home, name='home'),
+    path('home/', views.Home, name='home'),
     path('addActivo/', views.addActivo),
-    path('grafico/', views.Grafico),
-    path('guardar_datos/', views.guardar_datos, name='guardar_datos'),
-    path('diario/', views.Diario_Trade),
+    path('guardar_datos/', views.guardar_datos, name='guardar_datos')
 
 ]
